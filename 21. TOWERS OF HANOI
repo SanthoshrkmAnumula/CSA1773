@@ -1,0 +1,9 @@
+?- move(3,left,right,center).
+Movethetop disk from left to right
+Movethetop disk from left to center
+Movethetop disk from right to center
+Movethetop disk from left to right
+Movethetop disk from center to left
+Movethetop disk from center to right
+Movethetop disk from left to right
+true
