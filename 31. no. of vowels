@@ -1,0 +1,122 @@
+def count_vowels_loop(text):
+    """Count vowels using a basic for loop."""
+    vowels = "aeiouAEIOU"
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
+def count_vowels_comprehension(text):
+    """Count vowels using list comprehension."""
+    vowels = "aeiouAEIOU"
+    return len([char for char in text if char in vowels])
+def count_vowels_count_method(text):
+    """Count vowels using str.count() for each vowel."""
+    text_lower = text.lower()
+    return sum(text_lower.count(v) for v in "aeiou")
+def count_vowels_counter(text):
+    """Count vowels using collections.Counter."""
+    vowels = set("aeiouAEIOU")
+    freq = Counter(text)
+    return sum(freq[v] for v in vowels if v in freq)
+def count_vowels_detailed(text):
+    """
+    Returns a detailed breakdown:
+      - total vowel count
+      - count per vowel (case-insensitive)
+      - vowel positions in the string
+    """
+    vowels = "aeiou"
+    text_lower = text.lower()
+ 
+    per_vowel = {v: 0 for v in vowels}
+    positions = []
+ 
+    for i, char in enumerate(text_lower):
+        if char in vowels:
+            per_vowel[char] += 1
+            positions.append((i, text[i]))   # original case preserved
+ 
+    total = sum(per_vowel.values())
+    return total, per_vowel, positions
+def display_results(text):
+    separator = "─" * 55
+    print(f"\n{'═' * 55}")
+    print(f'  Input  : "{text}"')
+    print(f"  Length : {len(text)} characters")
+    print(f"{'═' * 55}")
+ 
+    # Approaches 1–4
+    r1 = count_vowels_loop(text)
+    r2 = count_vowels_comprehension(text)
+    r3 = count_vowels_count_method(text)
+    r4 = count_vowels_counter(text)
+ 
+    print(f"\n  Approach 1 — Simple loop          : {r1}")
+    print(f"  Approach 2 — List comprehension   : {r2}")
+    print(f"  Approach 3 — str.count()          : {r3}")
+    print(f"  Approach 4 — collections.Counter  : {r4}")
+ 
+    # Approach 5 — detailed
+    total, per_vowel, positions = count_vowels_detailed(text)
+ 
+    print(f"\n{separator}")
+    print("  Detailed breakdown (case-insensitive)")
+    print(separator)
+    for v, cnt in per_vowel.items():
+        bar = "█" * cnt
+        print(f"   {v.upper()}  : {cnt:3d}  {bar}")
+    print(f"   {'─'*30}")
+    print(f"   Total vowels     : {total}")
+    total_chars = len(text.replace(" ", ""))
+    consonants = total_chars - total
+    print(f"   Total consonants : {consonants}")
+    print(f"   Non-alpha chars  : {len(text) - total_chars}")
+ 
+    print(f"\n{separator}")
+    print("  Vowel positions (index, character)")
+    print(separator)
+    if positions:
+        for idx, char in positions:
+            print(f"   index {idx:3d}  →  '{char}'")
+    else:
+        print("   No vowels found.")
+ 
+    print(f"{'═' * 55}\n")
+def interactive_mode():
+    print("\n" + "═" * 55)
+    print("       🔤  Vowel Counter — Interactive Mode")
+    print("═" * 55)
+    print("  Type a sentence and press Enter.")
+    print("  Type 'quit' to exit.\n")
+ 
+    while True:
+        text = input("  Enter text: ").strip()
+        if text.lower() == "quit":
+            print("\n  Goodbye!\n")
+            break
+        if not text:
+            print("  (empty input — please type something)\n")
+            continue
+        display_results(text)
+if __name__ == "__main__":
+    test_cases = [
+        "Hello, World!",
+        "Python Programming",
+        "The quick brown fox jumps over the lazy dog",
+        "RHYTHM",                   # no lowercase vowels
+        "aeiou AEIOU",              # all vowels
+        "1234 !@#$",                # no vowels at all
+    ]
+ 
+    print("\n" + "=" * 55)
+    print("       VOWEL COUNTER — DEMO EXAMPLES")
+    print("=" * 55)
+ 
+    for test in test_cases:
+        display_results(test)
+ 
+    # Uncomment the line below to enable interactive input:
+    # interactive_mode()
+ 
+
